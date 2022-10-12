@@ -12,11 +12,9 @@ public class World {
     }
 
     public static void run(Direction[] args) {
-        String commands = Arrays.stream(args).map(x -> x.getText() + ", ").collect(Collectors.joining());
-        commands = commands.substring(0, commands.length() - 2);
-        System.out.println("zwierzak biegnie " + commands);
-//        System.out.println(Arrays.stream(args).map(x -> x.getText() + ", ").collect(Collectors.joining())
-//                .substring(0, -2 + args.length * 2 + Arrays.stream(args).map(x -> x.getText().length()).reduce(0, (x, y) -> x + y)));
+
+        System.out.println("Parametry: " + Arrays.stream(args).map(x -> x.getText()).collect(Collectors.joining(", ")));
+
         for (Direction arg : args) {
             switch (arg) {
                 case FORWARD -> System.out.println("Zwierzak idzie do przodu");
