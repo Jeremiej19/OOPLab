@@ -1,6 +1,6 @@
 package agh.ics.oop;
 
-public enum Direction {
+public enum MoveDirection {
     FORWARD("f"),
     BACKWARD("b"),
     RIGHT("r"),
@@ -9,7 +9,7 @@ public enum Direction {
 
     private String value;
 
-    Direction(String s) {
+    MoveDirection(String s) {
         this.value = s;
     }
 
@@ -17,8 +17,8 @@ public enum Direction {
         return value;
     }
 
-    public static Direction fromText(String s) {
-        for (Direction d : Direction.values()) {
+    public static MoveDirection fromText(String s) {
+        for (MoveDirection d : MoveDirection.values()) {
             if (d.getText().equals(s.toLowerCase())) {
                 return d;
             }
