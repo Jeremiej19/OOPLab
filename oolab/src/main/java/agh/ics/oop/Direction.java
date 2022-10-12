@@ -4,9 +4,14 @@ public enum Direction {
     FORWARD("f"),
     BACKWARD("b"),
     RIGHT("r"),
-    LEFT("l");
+    LEFT("l"),
+    INVALID("");
 
     private String value;
+
+    Direction(String s) {
+        this.value = s;
+    }
 
     public String getText() {
         return value;
@@ -14,14 +19,11 @@ public enum Direction {
 
     public static Direction fromText(String s) {
         for (Direction d : Direction.values()) {
-            if (d.getText().equals(s)) {
+            if (d.getText().equals(s.toLowerCase())) {
                 return d;
             }
         }
-        return null;
+        return INVALID;
     }
 
-    Direction(String s) {
-        this.value = s;
-    }
 }
