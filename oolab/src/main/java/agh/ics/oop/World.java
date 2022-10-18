@@ -17,8 +17,11 @@ public class World {
         System.out.println(position2);
         System.out.println(position1.add(position2));
 
-        System.out.println(MapDirection.EAST);
-//        Objects.hashCode(new Vector2d(1,2));
+        System.out.println(MapDirection.WEST.next());
+        System.out.println(MapDirection.WEST.previous());
+        System.out.println(MapDirection.NORTH.next());
+        System.out.println(MapDirection.NORTH.previous());
+
     }
 
     public static void run(MoveDirection[] args) {
