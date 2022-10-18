@@ -78,24 +78,24 @@ class Vector2dTest {
     @Test
     void upperRight() {
         Vector2d zeroVector = new Vector2d(0, 0);
-        Assertions.assertEquals(zeroVector,zeroVector.upperRight(zeroVector));
+        Assertions.assertEquals(zeroVector, zeroVector.upperRight(zeroVector));
         Assertions.assertEquals(zeroVector, zeroVector.upperRight(new Vector2d(-5, -45)));
         Assertions.assertEquals(new Vector2d(5, 5), zeroVector.upperRight(new Vector2d(5, 5)));
         Assertions.assertEquals(new Vector2d(0, 5), zeroVector.upperRight(new Vector2d(-5, 5)));
-        Assertions.assertEquals(new Vector2d(19, 8), new Vector2d(19,8).upperRight(new Vector2d(6, -3)));
-        Assertions.assertEquals(new Vector2d(-6, -3), new Vector2d(-19,-8).upperRight(new Vector2d(-6, -3)));
+        Assertions.assertEquals(new Vector2d(19, 8), new Vector2d(19, 8).upperRight(new Vector2d(6, -3)));
+        Assertions.assertEquals(new Vector2d(-6, -3), new Vector2d(-19, -8).upperRight(new Vector2d(-6, -3)));
 
     }
 
     @Test
     void lowerLeft() {
         Vector2d zeroVector = new Vector2d(0, 0);
-        Assertions.assertEquals(zeroVector,zeroVector.lowerLeft(zeroVector));
+        Assertions.assertEquals(zeroVector, zeroVector.lowerLeft(zeroVector));
         Assertions.assertEquals(zeroVector, zeroVector.lowerLeft(new Vector2d(5, 2)));
         Assertions.assertEquals(zeroVector, zeroVector.lowerLeft(new Vector2d(1234567, 12356789)));
         Assertions.assertEquals(new Vector2d(-15, -65), zeroVector.lowerLeft(new Vector2d(-15, -65)));
         Assertions.assertEquals(new Vector2d(0, -65), zeroVector.lowerLeft(new Vector2d(65, -65)));
-        Assertions.assertEquals(new Vector2d(-1000, 8), new Vector2d(-19,8).lowerLeft(new Vector2d(-1000, 65)));
+        Assertions.assertEquals(new Vector2d(-1000, 8), new Vector2d(-19, 8).lowerLeft(new Vector2d(-1000, 65)));
 
     }
 

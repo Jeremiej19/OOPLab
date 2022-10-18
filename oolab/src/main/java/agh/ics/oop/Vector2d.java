@@ -50,9 +50,9 @@ public class Vector2d {
 
     @Override
     public boolean equals(Object other) {
-        if( this == other )
+        if (this == other)
             return true;
-        if( this.getClass() != other.getClass() )
+        if (this.getClass() != other.getClass())
             return false;
 
         Vector2d otherVec2d = (Vector2d) other;
