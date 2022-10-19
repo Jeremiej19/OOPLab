@@ -123,4 +123,10 @@ class Vector2dTest {
         Assertions.assertNotEquals(vector, vector.opposite());
         Assertions.assertNotEquals(vector, vector.add(new Vector2d(1, 0)));
     }
+
+    @Test
+    void testHashCode() {
+        Assertions.assertEquals(new Vector2d(0,0).hashCode(),new Vector2d(0,0).hashCode());
+        Assertions.assertNotEquals(new Vector2d(0,0).hashCode(),new Vector2d(1,0).hashCode());
+    }
 }

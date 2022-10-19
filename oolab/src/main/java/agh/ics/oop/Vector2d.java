@@ -45,7 +45,7 @@ public class Vector2d {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this);
+        return Objects.hash(this.x,this.y);
     }
 
     @Override
