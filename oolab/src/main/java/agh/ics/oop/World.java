@@ -1,34 +1,30 @@
 package agh.ics.oop;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class World {
 
     public static void main(String[] args) {
-        System.out.println("system wystartował");
-        run(Arrays.stream(args).map(x -> MoveDirection.fromText(x)).filter(x -> x != MoveDirection.INVALID).toArray(MoveDirection[]::new));
-        System.out.println("system zakończył działanie");
 
-        Vector2d position1 = new Vector2d(1, 2);
-        System.out.println(position1);
-        Vector2d position2 = new Vector2d(-2, 1);
-        System.out.println(position2);
-        System.out.println(position1.add(position2));
+        MoveDirection[] movesList = OptionsParser.parse(args);
+        System.out.println(Arrays.toString(movesList));
 
-    }
+        Animal animal1 = new Animal();
+        System.out.println(animal1);
+        animal1.move(MoveDirection.RIGHT);
+        animal1.move(MoveDirection.FORWARD);
+        animal1.move(MoveDirection.FORWARD);
+        animal1.move(MoveDirection.FORWARD);
+        System.out.println(animal1);
 
-    public static void run(MoveDirection[] args) {
+        System.out.println("----------");
 
-        System.out.println("Parametry: " + Arrays.stream(args).map(x -> x.getText()).collect(Collectors.joining(", ")));
-
-        for (MoveDirection arg : args) {
-            switch (arg) {
-                case FORWARD -> System.out.println("Zwierzak idzie do przodu");
-                case BACKWARD -> System.out.println("Zwierzak idzie do tyłu");
-                case LEFT -> System.out.println("Zwierzak idzie w lewo");
-                case RIGHT -> System.out.println("Zwierzak idzie w prawo");
-            }
+        Animal animal2 = new Animal();
+        System.out.println(animal2);
+        for (MoveDirection I : movesList) {
+            animal2.move(I);
         }
+        System.out.println(animal2);
     }
+
 }

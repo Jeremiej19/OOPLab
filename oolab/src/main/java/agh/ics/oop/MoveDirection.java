@@ -1,25 +1,28 @@
 package agh.ics.oop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum MoveDirection {
-    FORWARD("f"),
-    BACKWARD("b"),
-    RIGHT("r"),
-    LEFT("l"),
-    INVALID("");
+    FORWARD(new ArrayList<>(List.of(new String[]{"f","forward"}))),
+    BACKWARD(new ArrayList<>(List.of(new String[]{"b","backward"}))),
+    RIGHT(new ArrayList<>(List.of(new String[]{"r","right"}))),
+    LEFT(new ArrayList<>(List.of(new String[]{"l","left"}))),
+    INVALID(new ArrayList<>(List.of(new String[]{})));
 
-    private String value;
+    private final List<String> value;
 
-    MoveDirection(String s) {
+    MoveDirection(List<String> s) {
         this.value = s;
     }
 
-    public String getText() {
+    public List<String> getTextArray() {
         return value;
     }
 
     public static MoveDirection fromText(String s) {
         for (MoveDirection d : MoveDirection.values()) {
-            if (d.getText().equals(s.toLowerCase())) {
+            if (d.getTextArray().contains(s.toLowerCase())) {
                 return d;
             }
         }
