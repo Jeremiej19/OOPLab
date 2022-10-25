@@ -10,19 +10,15 @@ public enum MoveDirection {
     LEFT(new ArrayList<>(List.of(new String[]{"l","left"}))),
     INVALID(new ArrayList<>(List.of(new String[]{})));
 
-    private final List<String> value;
+    private final List<String> values;
 
     MoveDirection(List<String> s) {
-        this.value = s;
-    }
-
-    public List<String> getTextArray() {
-        return value;
+        this.values = s;
     }
 
     public static MoveDirection fromText(String s) {
         for (MoveDirection d : MoveDirection.values()) {
-            if (d.getTextArray().contains(s.toLowerCase())) {
+            if (d.values.contains(s.toLowerCase())) {
                 return d;
             }
         }
