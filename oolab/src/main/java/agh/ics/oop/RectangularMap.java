@@ -1,7 +1,5 @@
 package agh.ics.oop;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +45,7 @@ public class RectangularMap implements IWorldMap {
     public Object objectAt(Vector2d position) {
         for (Animal animal : animals) {
             if (animal.isAt(position)) {
-                return  animal;
+                return animal;
             }
         }
         return null;
@@ -55,7 +53,7 @@ public class RectangularMap implements IWorldMap {
 
     @Override
     public String toString() {
-        return new MapVisualizer(this).draw(new Vector2d(0,0),new Vector2d(width-1,height-1));
+        return new MapVisualizer(this).draw(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
     }
 
 //    public JComponent getPane() {

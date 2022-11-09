@@ -11,9 +11,9 @@ import static java.lang.Thread.sleep;
 
 public class SimulationEngine implements IEngine {
 
-    private IWorldMap map;
-    private List<MoveDirection> moves = new LinkedList<>();
-    private List<Animal> animals = new ArrayList<>();
+    private final IWorldMap map;
+    private final List<MoveDirection> moves = new LinkedList<>();
+    private final List<Animal> animals = new ArrayList<>();
     private int currentAnimal;
 
     public SimulationEngine(MoveDirection[] dir, IWorldMap m, Vector2d[] p) {
@@ -27,31 +27,39 @@ public class SimulationEngine implements IEngine {
         }
     }
 
+
     @Override
-    public void run() throws InterruptedException {
-        JFrame frame = new JFrame("JFrame Example");
+    public void run( ) throws InterruptedException {
+        this.run(true);
+    }
+
+    public void run( boolean gui ) throws InterruptedException {
+        JFrame frame = new JFrame("World");
         JPanel panel = new JPanel();
-        panel.setLayout( new GridBagLayout() );
+        panel.setLayout(new GridBagLayout());
         JTextArea label = new JTextArea(map.toString());
         label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         label.setEditable(false);
-
         panel.add(label);
         frame.add(panel);
         frame.setSize(500, 500);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        if( gui ) {
+            frame.setVisible(true);
+        }
+
         System.out.println(moves);
         System.out.println(map);
-        for( MoveDirection m : moves) {
+        for (MoveDirection m : moves) {
             System.out.println(currentAnimal);
             System.out.println(m);
             animals.get(currentAnimal).move(m);
             currentAnimal = ++currentAnimal % animals.size();
             System.out.println(map);
-            label.setText(map.toString());
-            sleep(500);
+            label.setText(map.toString().trim());
+            if( gui )
+                sleep(400);
         }
 
     }
