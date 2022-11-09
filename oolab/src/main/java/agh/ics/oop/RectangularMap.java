@@ -56,13 +56,4 @@ public class RectangularMap implements IWorldMap {
         return new MapVisualizer(this).draw(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
     }
 
-//    public JComponent getPane() {
-//        return new JComponent() {
-//            @Override
-//            protected void paintComponent(Graphics g) {
-//                super.paintComponent(g);
-//            }
-//        }
-//    }
-
 }
