@@ -19,6 +19,7 @@ class AnimalTest {
         Animal animal = new Animal();
         animal.move(MoveDirection.BACKWARD);
         animal.move(MoveDirection.BACKWARD);
+        System.out.println(animal.getLocation());
         assertTrue(animal.isAt(new Vector2d(2,0)));
         animal.move(MoveDirection.FORWARD);
         animal.move(MoveDirection.RIGHT);

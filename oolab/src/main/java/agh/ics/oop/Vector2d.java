@@ -10,6 +10,10 @@ public class Vector2d {
         this.y = y;
     }
 
+    public Vector2d(Vector2d vector) {
+        this(vector.x,vector.y);
+    }
+
     @Override
     public String toString() {
         return "(" + x + "," + y + ")";

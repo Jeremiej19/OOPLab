@@ -16,6 +16,15 @@ public enum MapDirection {
         };
     }
 
+    public String getChar() {
+        return switch (this) {
+            case NORTH -> "^";
+            case SOUTH -> "v";
+            case WEST -> "<";
+            case EAST -> ">";
+        };
+    }
+
     MapDirection next() {
         return values()[(this.ordinal() + 1) % values().length];
     }
