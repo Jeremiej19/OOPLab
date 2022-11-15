@@ -3,10 +3,9 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RectangularMap implements IWorldMap {
+public class RectangularMap extends AbstractWorldMap {
     private final int width;
     private final int height;
-    private final List<Animal> animals = new ArrayList<>();
 
     public RectangularMap(int width, int height) {
         this.width = width;
@@ -20,15 +19,6 @@ public class RectangularMap implements IWorldMap {
     @Override
     public boolean canMoveTo(Vector2d position) {
         return isInBounds(position) && !isOccupied(position);
-    }
-
-    @Override
-    public boolean place(Animal animal) {
-        if (canMoveTo(animal.getLocation())) {
-            animals.add(animal);
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -52,8 +42,14 @@ public class RectangularMap implements IWorldMap {
     }
 
     @Override
-    public String toString() {
-        return new MapVisualizer(this).draw(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
+    protected MapSize getSize() {
+        return new MapSize(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
     }
+
+
+//    @Override
+//    public String toString() {
+//        return new MapVisualizer(this).draw(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
+//    }
 
 }

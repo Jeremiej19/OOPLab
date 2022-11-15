@@ -13,18 +13,17 @@ public class SimulationEngine implements IEngine {
 
     private final IWorldMap map;
     private final List<MoveDirection> moves = new LinkedList<>();
-    private final List<Animal> animals = new ArrayList<>();
+    private final List<Animal> animals;
     private int currentAnimal;
 
     public SimulationEngine(MoveDirection[] dir, IWorldMap m, Vector2d[] p) {
         map = m;
         Collections.addAll(moves, dir);
         for (Vector2d pos : p) {
-            var a = new Animal(map, pos);
-            if (map.place(a)) {
-                animals.add(a);
-            }
+
+            map.place(new Animal(map,pos));
         }
+        animals = map.getAnimals();
     }
 
 
@@ -35,16 +34,32 @@ public class SimulationEngine implements IEngine {
 
     public void run( boolean gui ) throws InterruptedException {
         JFrame frame = new JFrame("World");
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
+
         JTextArea label = new JTextArea(map.toString());
         label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
         label.setEditable(false);
-        panel.add(label);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.insets = new Insets(40,40,40,40);
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.anchor = GridBagConstraints.CENTER;
+        panel.add(label,constraints);
         frame.add(panel);
-        frame.setSize(500, 500);
-        frame.setLocationRelativeTo(null);
+
+//        frame.setSize(1000, 1000);
+        frame.setMaximumSize(new Dimension(1000,1000));
+        frame.setMinimumSize((new Dimension(300,300)));
+//        frame.setPreferredSize(new Dimension(500,500));
+
+//        frame.setLocationRelativeTo(null);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width/2-frame.getSize().width/2 -200, dim.height/2-frame.getSize().height/2 -200);
+        //
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+
         if( gui ) {
             frame.setVisible(true);
         }
@@ -54,10 +69,14 @@ public class SimulationEngine implements IEngine {
         for (MoveDirection m : moves) {
             System.out.println(currentAnimal);
             System.out.println(m);
+
             animals.get(currentAnimal).move(m);
             currentAnimal = ++currentAnimal % animals.size();
+
+
             System.out.println(map);
             label.setText(map.toString().trim());
+            frame.pack();
             if( gui )
                 sleep(400);
         }
