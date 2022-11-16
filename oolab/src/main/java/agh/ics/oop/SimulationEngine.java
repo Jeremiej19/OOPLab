@@ -78,7 +78,7 @@ public class SimulationEngine implements IEngine {
             label.setText(map.toString().trim());
             frame.pack();
             if( gui )
-                sleep(400);
+                sleep(350);
         }
 
     }

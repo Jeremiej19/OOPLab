@@ -1,14 +1,9 @@
 package agh.ics.oop;
 
-public class Grass {
-    private Vector2d location;
+public class Grass extends AbstractWorldMapElement {
 
     public Grass(Vector2d position) {
         location = position;
-    }
-
-    public Vector2d getLocation() {
-        return new Vector2d(location);
     }
 
     @Override
@@ -16,7 +11,4 @@ public class Grass {
         return "*";
     }
 
-    boolean isAt(Vector2d position) {
-        return this.location.equals(position);
-    }
 }

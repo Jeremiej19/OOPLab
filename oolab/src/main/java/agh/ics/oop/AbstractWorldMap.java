@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap{
+public abstract class AbstractWorldMap implements IWorldMap {
     protected final List<Animal> animals = new ArrayList<>();
 
     @Override
@@ -26,7 +26,7 @@ public abstract class AbstractWorldMap implements IWorldMap{
     @Override
     public String toString() {
         MapSize size = getSize();
-        return new MapVisualizer(this).draw( size.lowerPoint, size.upperPoint );
+        return new MapVisualizer(this).draw(size.lowerPoint, size.upperPoint);
     }
 
 }
