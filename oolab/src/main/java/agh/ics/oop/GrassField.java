@@ -1,11 +1,12 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GrassField extends AbstractWorldMap {
-    private final List<Grass> grassFields = new ArrayList<>();
+//    private final List<Grass> grassFields = new ArrayList<>();
+    private final Map<Vector2d,Grass> grassFields = new HashMap<>();
     private final int size;
 
     public GrassField(int grassCount) {
@@ -13,14 +14,14 @@ public class GrassField extends AbstractWorldMap {
             grassCount = 1;
         size = (int) Math.ceil(Math.sqrt(grassCount * 10));
         for (int i = 0; i < grassCount; ++i) {
-            grassFields.add(new Grass(randomVec2d()));
+            var loc = randomVec2d();
+            grassFields.put(new Vector2d(loc),new Grass(loc));
         }
     }
 
     private Vector2d nextPostion(Vector2d vec) {
         if (vec.x + 1 < size)
             return new Vector2d(vec.x + 1, vec.y);
-
         if (vec.y + 1 < size) {
             return new Vector2d(0, vec.y + 1);
         } else {
@@ -40,9 +41,13 @@ public class GrassField extends AbstractWorldMap {
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         Object o = objectAt(newPosition);
         if (o != null && o.getClass().equals(Grass.class)) {
-            grassFields.remove(o);
+            grassFields.remove(((Grass) o).getLocation());
             super.positionChanged(oldPosition, newPosition);
-            grassFields.add(new Grass(randomVec2d()));
+            var loc = randomVec2d();
+            while (this.isOccupied(loc)) {
+                loc = nextPostion(loc);
+            }
+            grassFields.putIfAbsent(new Vector2d(loc),new Grass(loc));
         } else {
             super.positionChanged(oldPosition, newPosition);
         }
@@ -56,15 +61,14 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        if (animals.containsKey(position)) {
-            return true;
-        }
-        for (Grass grass : grassFields) {
-            if (grass.isAt(position)) {
-                return true;
-            }
-        }
-        return false;
+//            if (animals.containsKey(position)) {
+//                return true;
+//            }
+//            if (grassFields.containsKey(position)) {
+//                return true;
+//            }
+//            return false;
+        return animals.containsKey(position) || grassFields.containsKey(position);
     }
 
     @Override
@@ -72,17 +76,15 @@ public class GrassField extends AbstractWorldMap {
         if (animals.containsKey(position)) {
             return animals.get(position);
         }
-        for (Grass grass : grassFields) {
-            if (grass.isAt(position)) {
-                return grass;
-            }
+        if (grassFields.containsKey(position)) {
+            return grassFields.get(position);
         }
         return null;
     }
 
     @Override
     protected MapSize getSize() {
-        var grassPos = grassFields.stream().map(Grass::getLocation).toList();
+        var grassPos = grassFields.keySet().stream().toList();
         Vector2d minPos = grassPos.stream().reduce(grassPos.get(0), Vector2d::lowerLeft);
         Vector2d maxPos = grassPos.stream().reduce(grassPos.get(0), Vector2d::upperRight);
 
