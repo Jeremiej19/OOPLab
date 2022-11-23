@@ -36,6 +36,7 @@ class GrassFieldTest {
 //        System.out.println(map);
         assertTrue(a1.isAt(new Vector2d(-2, 2)));
         assertTrue(a2.isAt(new Vector2d(2, 7)));
+        System.out.println(a2.getLocation());
         assertFalse(map.place(new Animal(map, new Vector2d(2, 7))));
         assertTrue(map.objectAt(new Vector2d(2, 7)) == a2);
     }

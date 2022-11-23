@@ -37,26 +37,27 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public boolean canMoveTo(Vector2d position) {
-        for (Animal animal : animals) {
-            if (animal.isAt(position)) {
-                return false;
-            }
-        }
-        Object o = objectAt(position);
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        Object o = objectAt(newPosition);
         if (o != null && o.getClass().equals(Grass.class)) {
             grassFields.remove(o);
+            super.positionChanged(oldPosition, newPosition);
             grassFields.add(new Grass(randomVec2d()));
+        } else {
+            super.positionChanged(oldPosition, newPosition);
         }
-        return true;
+
+    }
+
+    @Override
+    public boolean canMoveTo(Vector2d position) {
+        return !animals.containsKey(position);
     }
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        for (Animal animal : animals) {
-            if (animal.isAt(position)) {
-                return true;
-            }
+        if (animals.containsKey(position)) {
+            return true;
         }
         for (Grass grass : grassFields) {
             if (grass.isAt(position)) {
@@ -68,10 +69,8 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public Object objectAt(Vector2d position) {
-        for (Animal animal : animals) {
-            if (animal.isAt(position)) {
-                return animal;
-            }
+        if (animals.containsKey(position)) {
+            return animals.get(position);
         }
         for (Grass grass : grassFields) {
             if (grass.isAt(position)) {
@@ -88,7 +87,7 @@ public class GrassField extends AbstractWorldMap {
         Vector2d maxPos = grassPos.stream().reduce(grassPos.get(0), Vector2d::upperRight);
 
         if (!animals.isEmpty()) {
-            var animalsPos = animals.stream().map(Animal::getLocation).toList();
+            var animalsPos = animals.keySet().stream().toList();
             Vector2d minPosAnimal = animalsPos.stream().reduce(animalsPos.get(0), Vector2d::lowerLeft);
             Vector2d maxPosAnimal = animalsPos.stream().reduce(animalsPos.get(0), Vector2d::upperRight);
             minPos = minPos.lowerLeft(minPosAnimal);

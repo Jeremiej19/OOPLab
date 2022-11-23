@@ -20,22 +20,12 @@ public class RectangularMap extends AbstractWorldMap {
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        for (Animal animal : animals) {
-            if (animal.isAt(position)) {
-                return true;
-            }
-        }
-        return false;
+        return animals.containsKey(position);
     }
 
     @Override
     public Object objectAt(Vector2d position) {
-        for (Animal animal : animals) {
-            if (animal.isAt(position)) {
-                return animal;
-            }
-        }
-        return null;
+        return animals.get(position);
     }
 
     @Override
@@ -44,9 +34,5 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
 
-//    @Override
-//    public String toString() {
-//        return new MapVisualizer(this).draw(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
-//    }
 
 }
