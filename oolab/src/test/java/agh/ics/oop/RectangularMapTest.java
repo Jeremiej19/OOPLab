@@ -13,7 +13,7 @@ class RectangularMapTest {
         Animal a1 = new Animal(map);
         Animal a2 = new Animal(map, new Vector2d(2, 3));
         assertTrue(map.place(a1));
-        assertFalse(map.place(new Animal(map)));
+        assertThrows(IllegalArgumentException.class, () -> map.place(new Animal(map)));
         assertTrue(map.place(a2));
         assertFalse(map.canMoveTo(new Vector2d(2, 3)));
         assertTrue(map.canMoveTo(new Vector2d(3, 2)));
@@ -34,7 +34,7 @@ class RectangularMapTest {
         a1.move(MoveDirection.FORWARD);
         assertTrue(a1.isAt(new Vector2d(0, 2)));
         assertTrue(a2.isAt(new Vector2d(2, 4)));
-        assertFalse(map.place(new Animal(map, new Vector2d(2, 4))));
+        assertThrows(IllegalArgumentException.class,() -> map.place(new Animal(map, new Vector2d(2, 4))));
         assertTrue(map.objectAt(new Vector2d(2, 4)) == a2);
     }
 

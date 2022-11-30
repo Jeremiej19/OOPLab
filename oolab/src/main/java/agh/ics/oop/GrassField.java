@@ -5,16 +5,17 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GrassField extends AbstractWorldMap {
-//    private final List<Grass> grassFields = new ArrayList<>();
     private final Map<Vector2d,Grass> grassFields = new HashMap<>();
     private final int size;
 
-    public GrassField(int grassCount) {
+    public GrassField(int grassCount, MapBoundary mb) {
+        mapBoundary = mb;
         if (grassCount < 1)
-            grassCount = 1;
+            grassCount = 0;
         size = (int) Math.ceil(Math.sqrt(grassCount * 10));
         for (int i = 0; i < grassCount; ++i) {
             var loc = randomVec2d();
+            mapBoundary.add(loc);
             grassFields.put(new Vector2d(loc),new Grass(loc));
         }
     }
@@ -55,19 +56,21 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
+    public boolean place(Animal animal) {
+        var a =  super.place(animal);
+        if( a ) {
+            mapBoundary.add(animal.getLocation());
+        }
+        return a;
+    }
+
+    @Override
     public boolean canMoveTo(Vector2d position) {
         return !animals.containsKey(position);
     }
 
     @Override
     public boolean isOccupied(Vector2d position) {
-//            if (animals.containsKey(position)) {
-//                return true;
-//            }
-//            if (grassFields.containsKey(position)) {
-//                return true;
-//            }
-//            return false;
         return animals.containsKey(position) || grassFields.containsKey(position);
     }
 
@@ -84,18 +87,19 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     protected MapSize getSize() {
-        var grassPos = grassFields.keySet().stream().toList();
-        Vector2d minPos = grassPos.stream().reduce(grassPos.get(0), Vector2d::lowerLeft);
-        Vector2d maxPos = grassPos.stream().reduce(grassPos.get(0), Vector2d::upperRight);
-
-        if (!animals.isEmpty()) {
-            var animalsPos = animals.keySet().stream().toList();
-            Vector2d minPosAnimal = animalsPos.stream().reduce(animalsPos.get(0), Vector2d::lowerLeft);
-            Vector2d maxPosAnimal = animalsPos.stream().reduce(animalsPos.get(0), Vector2d::upperRight);
-            minPos = minPos.lowerLeft(minPosAnimal);
-            maxPos = maxPos.upperRight(maxPosAnimal);
-        }
-        return new MapSize(minPos, maxPos);
+//        var grassPos = grassFields.keySet().stream().toList();
+//        Vector2d minPos = grassPos.stream().reduce(grassPos.get(0), Vector2d::lowerLeft);
+//        Vector2d maxPos = grassPos.stream().reduce(grassPos.get(0), Vector2d::upperRight);
+//
+//        if (!animals.isEmpty()) {
+//            var animalsPos = animals.keySet().stream().toList();
+//            Vector2d minPosAnimal = animalsPos.stream().reduce(animalsPos.get(0), Vector2d::lowerLeft);
+//            Vector2d maxPosAnimal = animalsPos.stream().reduce(animalsPos.get(0), Vector2d::upperRight);
+//            minPos = minPos.lowerLeft(minPosAnimal);
+//            maxPos = maxPos.upperRight(maxPosAnimal);
+//        }
+//        return new MapSize(minPos, maxPos);
+        return mapBoundary.getBoundaries();
     }
 
 }

@@ -5,6 +5,8 @@ import java.util.Map;
 
 public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     protected Map<Vector2d, Animal> animals = new LinkedHashMap<>();
+    protected MapBoundary mapBoundary;
+
     @Override
     public Map<Vector2d, Animal> getAnimals() {
         return animals;
@@ -17,6 +19,8 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
 
     @Override
     public boolean place(Animal animal) {
+        if( animals.get(animal.getLocation()) != null )
+            throw new IllegalArgumentException("Pole " + animal.getLocation() + " jest już zajęte. Nie można ustawić tam drugiego zwierzęcia");
         return animals.putIfAbsent(animal.getLocation(), animal) == null;
     }
 

@@ -11,15 +11,19 @@ import static java.lang.Thread.sleep;
 public class SimulationEngine implements IEngine {
 
     private final IWorldMap map;
+    private final IPositionChangeObserver mapBoundary;
     private final List<MoveDirection> moves = new LinkedList<>();
     private final List<Animal> animals;
     private int currentAnimal;
 
-    public SimulationEngine(MoveDirection[] dir, AbstractWorldMap m, Vector2d[] p) {
+    public SimulationEngine(MoveDirection[] dir, AbstractWorldMap m, Vector2d[] p, MapBoundary mb) {
         map = m;
+        mapBoundary = mb;
         Collections.addAll(moves, dir);
         for (Vector2d pos : p) {
-            map.place(new Animal(map, pos, m));
+            var a = new Animal(map, pos, m);
+            a.addObserver(mapBoundary);
+            map.place(a);
         }
         animals = map.getAnimals().values().stream().toList();
     }
