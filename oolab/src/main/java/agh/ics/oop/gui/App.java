@@ -11,6 +11,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class App extends Application {
     @Override
@@ -25,16 +26,20 @@ public class App extends Application {
         System.out.println((Arrays.toString(map.toString().split(System.lineSeparator()))));
         var tmp =  (map.toString().split(System.lineSeparator()));
         var rows = Arrays.copyOfRange( tmp,  1,  tmp.length);
+//        Collections.reverse(Arrays.asList(rows));
+//        rows = Arrays.asList(rows).toArray(new String[]{});
+
         var cStart = mapBoundary.getBoundaries().lowerPoint.getX();
         var rStart = mapBoundary.getBoundaries().lowerPoint.getY();
 //        var cStart = mapBoundary.getBoundaries().lowerPoint.getY();
 //        var rStart = mapBoundary.getBoundaries().lowerPoint.getX();
-        int nCols = rows[1].length();
-        int nRows = rows.length;
+        int nRows = rows[1].length();
+        int nCols = rows.length;
         System.out.println(nRows);
         System.out.println(nCols);
         System.out.println(rStart);
         System.out.println(cStart);
+        System.out.println(mapBoundary.getBoundaries().lowerPoint);
         GridPane gridPane = new GridPane();
         for (int i=0 ; i<= nCols; ++i) {
             gridPane.getRowConstraints().add(new RowConstraints(30));
@@ -55,7 +60,7 @@ public class App extends Application {
         }
         for( int i = 0 ; i < nRows ; ++i ) {
             for( int j = 0 ; j < nCols ; ++j ) {
-                var  loc = new Vector2d(i+rStart-1-1,j+cStart-1-1);
+                var loc = new Vector2d(i+cStart,j+rStart);
                 var text = map.objectAt(loc) == null ? " " : map.objectAt(loc).toString();
                 var l = new Label(text);
                 GridPane.setHalignment(l, HPos.CENTER);
