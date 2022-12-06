@@ -59,12 +59,12 @@ public class App extends Application {
             gridPane.add(l2,0,i);
         }
         for( int i = 0 ; i < nRows ; ++i ) {
-            for( int j = 0 ; j < nCols ; ++j ) {
+            for( int j = nCols-1 ; j >= 0 ; --j ) {
                 var loc = new Vector2d(i+cStart,j+rStart);
                 var text = map.objectAt(loc) == null ? " " : map.objectAt(loc).toString();
                 var l = new Label(text);
                 GridPane.setHalignment(l, HPos.CENTER);
-                gridPane.add(l,i+1,j+1);
+                gridPane.add(l,i+1,nCols-j);
             }
         }
         Scene scene = new Scene(gridPane, 600, 600);
