@@ -35,7 +35,7 @@ class RectangularMapTest {
         assertTrue(a1.isAt(new Vector2d(0, 2)));
         assertTrue(a2.isAt(new Vector2d(2, 4)));
         assertThrows(IllegalArgumentException.class,() -> map.place(new Animal(map, new Vector2d(2, 4))));
-        assertTrue(map.objectAt(new Vector2d(2, 4)) == a2);
+        assertSame(map.objectAt(new Vector2d(2, 4)), a2);
     }
 
 }

@@ -32,15 +32,15 @@ public class MapVisualizer {
     public String draw(Vector2d lowerLeft, Vector2d upperRight) {
         StringBuilder builder = new StringBuilder();
         for (int i = upperRight.y + 1; i >= lowerLeft.y - 1; i--) {
-            if (i == upperRight.y + 1) {
-                builder.append(drawHeader(lowerLeft, upperRight));
-            }
-            builder.append(String.format("%3d: ", i));
+//            if (i == upperRight.y + 1) {
+//                builder.append(drawHeader(lowerLeft, upperRight));
+//            }
+//            builder.append(String.format("%3d: ", i));
             for (int j = lowerLeft.x; j <= upperRight.x + 1; j++) {
                 if (i < lowerLeft.y || i > upperRight.y) {
-                    builder.append(drawFrame(j <= upperRight.x));
+//                    builder.append(drawFrame(j <= upperRight.x));
                 } else {
-                    builder.append(CELL_SEGMENT);
+//                    builder.append(CELL_SEGMENT);
                     if (j <= upperRight.x) {
                         builder.append(drawObject(new Vector2d(j, i)));
                     }
