@@ -10,4 +10,6 @@ public abstract class AbstractWorldMapElement {
     boolean isAt(Vector2d position) {
         return this.location.equals(position);
     }
+
+    public abstract String fileName();
 }

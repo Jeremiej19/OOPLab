@@ -76,7 +76,9 @@ public class SimulationEngine implements IEngine {
             currentAnimal = ++currentAnimal % animals.size();
 
 
+            System.out.println("--");
             System.out.println(map);
+            System.out.println("---");
             label.setText(map.toString().trim());
             frame.pack();
             if (gui)

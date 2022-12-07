@@ -8,8 +8,9 @@ import java.util.Arrays;
 public class World {
 
     public static void main(String[] args) throws InterruptedException {
+        Application.launch(App.class, args);
         try {
-            Application.launch(App.class, args);
+
 //            MapBoundary mapBoundary = new MapBoundary();
 //            AbstractWorldMap map = new GrassField(10, mapBoundary);
 //            Vector2d[] positions = {new Vector2d(2, 2), new Vector2d(3, 4)};

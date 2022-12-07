@@ -25,6 +25,15 @@ public enum MapDirection {
         };
     }
 
+    public String getFileName() {
+        return switch (this) {
+            case NORTH -> "up.png";
+            case SOUTH -> "down.png";
+            case WEST -> "left.png";
+            case EAST -> "right.png";
+        };
+    }
+
     MapDirection next() {
         return values()[(this.ordinal() + 1) % values().length];
     }

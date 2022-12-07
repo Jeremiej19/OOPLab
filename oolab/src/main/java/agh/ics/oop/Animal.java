@@ -66,4 +66,8 @@ public class Animal extends AbstractWorldMapElement {
         }
     }
 
+    @Override
+    public String fileName() {
+        return this.direction.getFileName();
+    }
 }

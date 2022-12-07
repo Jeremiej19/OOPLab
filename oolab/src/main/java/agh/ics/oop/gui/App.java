@@ -42,27 +42,28 @@ public class App extends Application {
         System.out.println(mapBoundary.getBoundaries().lowerPoint);
         GridPane gridPane = new GridPane();
         for (int i=0 ; i<= nCols; ++i) {
-            gridPane.getRowConstraints().add(new RowConstraints(30));
+            gridPane.getRowConstraints().add(new RowConstraints(40));
         }
         for (int i=0 ; i<= nRows ; ++i) {
-            gridPane.getColumnConstraints().add(new ColumnConstraints(30));
+            gridPane.getColumnConstraints().add(new ColumnConstraints(40));
         }
         gridPane.setGridLinesVisible(true);
-        for( int i = 0 ; i <= nRows ; ++i ) {
-            var l1 = new Label(Integer.toString(i));
+        for( int i = 1 ; i <= nRows ; ++i ) {
+            var l1 = new Label(Integer.toString(i+cStart-1));
             GridPane.setHalignment(l1, HPos.CENTER);
             gridPane.add(l1,i,0);
         }
-        for( int i = 0 ; i <= nCols ; ++i ) {
-            var l2 = new Label(Integer.toString(i));
+        for( int i = 1 ; i <= nCols ; ++i ) {
+            var l2 = new Label(Integer.toString(i+rStart-1));
             GridPane.setHalignment(l2, HPos.CENTER);
-            gridPane.add(l2,0,i);
+            gridPane.add(l2,0,nCols-i+1);
         }
         for( int i = 0 ; i < nRows ; ++i ) {
             for( int j = nCols-1 ; j >= 0 ; --j ) {
                 var loc = new Vector2d(i+cStart,j+rStart);
                 var text = map.objectAt(loc) == null ? " " : map.objectAt(loc).toString();
-                var l = new Label(text);
+//                var l = new Label(text);
+                var l = new GuiElementBox((AbstractWorldMapElement) map.objectAt(loc));
                 GridPane.setHalignment(l, HPos.CENTER);
                 gridPane.add(l,i+1,nCols-j);
             }

@@ -42,13 +42,14 @@ public class GrassField extends AbstractWorldMap {
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         Object o = objectAt(newPosition);
         if (o != null && o.getClass().equals(Grass.class)) {
-            grassFields.remove(((Grass) o).getLocation());
-            super.positionChanged(oldPosition, newPosition);
             var loc = randomVec2d();
             while (this.isOccupied(loc)) {
                 loc = nextPostion(loc);
             }
+            grassFields.remove(((Grass) o).getLocation());
             grassFields.putIfAbsent(new Vector2d(loc),new Grass(loc));
+            mapBoundary.positionChanged(newPosition,loc);
+            super.positionChanged(oldPosition, newPosition);
         } else {
             super.positionChanged(oldPosition, newPosition);
         }
