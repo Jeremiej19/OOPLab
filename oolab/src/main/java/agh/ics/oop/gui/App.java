@@ -2,6 +2,8 @@ package agh.ics.oop.gui;
 
 import agh.ics.oop.*;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -9,11 +11,12 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class App extends Application {
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         String[] args = getParameters().getRaw().toArray(new String[0]);
@@ -24,8 +27,8 @@ public class App extends Application {
         SimulationEngine engine = new SimulationEngine(directions, map, positions, mapBoundary);
         engine.run(false);
         System.out.println((Arrays.toString(map.toString().split(System.lineSeparator()))));
-        var tmp =  (map.toString().split(System.lineSeparator()));
-        var rows = Arrays.copyOfRange( tmp,  1,  tmp.length);
+        var tmp = (map.toString().split(System.lineSeparator()));
+        var rows = Arrays.copyOfRange(tmp, 1, tmp.length);
 //        Collections.reverse(Arrays.asList(rows));
 //        rows = Arrays.asList(rows).toArray(new String[]{});
 
@@ -41,35 +44,42 @@ public class App extends Application {
         System.out.println(cStart);
         System.out.println(mapBoundary.getBoundaries().lowerPoint);
         GridPane gridPane = new GridPane();
-        for (int i=0 ; i<= nCols; ++i) {
+        for (int i = 0; i <= nCols; ++i) {
             gridPane.getRowConstraints().add(new RowConstraints(40));
         }
-        for (int i=0 ; i<= nRows ; ++i) {
+        for (int i = 0; i <= nRows; ++i) {
             gridPane.getColumnConstraints().add(new ColumnConstraints(40));
         }
         gridPane.setGridLinesVisible(true);
-        for( int i = 1 ; i <= nRows ; ++i ) {
-            var l1 = new Label(Integer.toString(i+cStart-1));
+        for (int i = 1; i <= nRows; ++i) {
+            var l1 = new Label(Integer.toString(i + cStart - 1));
             GridPane.setHalignment(l1, HPos.CENTER);
-            gridPane.add(l1,i,0);
+            gridPane.add(l1, i, 0);
         }
-        for( int i = 1 ; i <= nCols ; ++i ) {
-            var l2 = new Label(Integer.toString(i+rStart-1));
+        for (int i = 1; i <= nCols; ++i) {
+            var l2 = new Label(Integer.toString(i + rStart - 1));
             GridPane.setHalignment(l2, HPos.CENTER);
-            gridPane.add(l2,0,nCols-i+1);
+            gridPane.add(l2, 0, nCols - i + 1);
         }
-        for( int i = 0 ; i < nRows ; ++i ) {
-            for( int j = nCols-1 ; j >= 0 ; --j ) {
-                var loc = new Vector2d(i+cStart,j+rStart);
+        for (int i = 0; i < nRows; ++i) {
+            for (int j = nCols - 1; j >= 0; --j) {
+                var loc = new Vector2d(i + cStart, j + rStart);
                 var text = map.objectAt(loc) == null ? " " : map.objectAt(loc).toString();
 //                var l = new Label(text);
                 var l = new GuiElementBox((AbstractWorldMapElement) map.objectAt(loc));
                 GridPane.setHalignment(l, HPos.CENTER);
-                gridPane.add(l,i+1,nCols-j);
+                gridPane.add(l, i + 1, nCols - j);
             }
         }
         Scene scene = new Scene(gridPane, 600, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
     }
 }

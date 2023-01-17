@@ -21,8 +21,8 @@ public class GuiElementBox extends VBox {
         if( mapElement == null ) {
             return;
         }
-        System.out.println(new File("oolab/src/main/resources/"+mapElement.fileName()).getAbsolutePath());
-        Image image = new Image(new FileInputStream("oolab/src/main/resources/"+mapElement.fileName()));
+        System.out.println(new File("src/main/resources/"+mapElement.fileName()).getAbsolutePath());
+        Image image = new Image(new FileInputStream("src/main/resources/"+mapElement.fileName()));
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(20);
         imageView.setFitHeight(20);
